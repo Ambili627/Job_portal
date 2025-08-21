@@ -122,7 +122,7 @@ class User(AbstractUser):
         total = len(fields)
         return int((completed / total) * 100) if total > 0 else 0
 
-    def _str_(self):
+    def __str__(self):
         return self.email
 
     class Meta:
@@ -152,7 +152,7 @@ class UserProfile(models.Model):
     company_website = models.URLField(blank=True, null=True)
     hiring_role = models.CharField(max_length=100, blank=True, null=True)
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.user.email}'s Profile"
 
     class Meta:
@@ -171,7 +171,7 @@ class Skill(models.Model):
         ('expert', 'Expert'),
     ), default='intermediate')
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.name} ({self.proficiency})"
 
     class Meta:
@@ -190,7 +190,7 @@ class Education(models.Model):
     currently_studying = models.BooleanField(default=False)
     description = models.TextField(blank=True)
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.degree} at {self.institution}"
 
     class Meta:
@@ -208,7 +208,7 @@ class Experience(models.Model):
     currently_working = models.BooleanField(default=False)
     description = models.TextField(blank=True)
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.position} at {self.company}"
 
     class Meta:
@@ -234,7 +234,7 @@ class CompanyProfile(models.Model):
     founded_year = models.IntegerField(null=True, blank=True)
     headquarters = models.CharField(max_length=100, blank=True, null=True)
 
-    def _str_(self):
+    def __str__(self):
         return self.company_name
 
     class Meta:
@@ -248,7 +248,7 @@ class PasswordResetToken(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_used = models.BooleanField(default=False)
 
-    def _str_(self):
+    def __str__(self):
         return f"Password reset token for {self.user.email}"
 
     def is_valid(self):

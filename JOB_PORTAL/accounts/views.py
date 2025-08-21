@@ -33,13 +33,11 @@ class UserRegistrationView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
 
-
         totp = pyotp.TOTP(pyotp.random_base32(), interval=300)
         otp = totp.now()
         user.otp = otp
         user.otp_created_at = timezone.now()
         user.save()
-
 
         try:
             send_mail(
@@ -191,13 +189,11 @@ class ResendOTPView(generics.GenericAPIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-
         totp = pyotp.TOTP(pyotp.random_base32(), interval=300)
         otp = totp.now()
         user.otp = otp
         user.otp_created_at = timezone.now()
         user.save()
-
 
         try:
             send_mail(
@@ -239,7 +235,6 @@ class CustomPasswordResetView(generics.GenericAPIView):
                 status=status.HTTP_200_OK
             )
 
-
         return Response(
             {"detail": "Password reset link has been sent to your email."},
             status=status.HTTP_200_OK
@@ -255,8 +250,8 @@ class CustomPasswordResetConfirmView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-
         return Response(
             {"detail": "Password has been reset successfully."},
             status=status.HTTP_200_OK
         )
+
